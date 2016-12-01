@@ -11,6 +11,7 @@ struct node{
 void InsertNth(int, int); // InserthNth(2,1)
 void Insert(struct node**,int);
 void Print(struct node*);
+void delete(int);
 
 int main () {
    struct node* head;
@@ -25,7 +26,7 @@ int main () {
       Insert(&head,x);
       Print(head);
    }
-
+  // delete(3);
 
   return 0;
 
@@ -74,5 +75,23 @@ void InsertNth (int data, int n) {
   temp1->next = temp2->next;
   temp2->next = temp1;
 
+
+}
+
+void Delete (int n) {
+  struct node* temp1 = head;
+   if (n == 1) {
+     head = temp1->next;
+     free(temp1);
+     return;
+   }
+  int i;
+  for (i = 0; i <= n-1; i++) {
+     temp1 = temp1->next;
+   }
+
+   struct node* temp2 = temp1->next; // temp2 = 0x3
+   temp1->next = temp2->next;
+   free(temp2);
 
 }

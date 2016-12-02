@@ -12,7 +12,7 @@ void reverse(struct node**);
 void InsertNth(struct node**,int,int);
 void PrintUsingRecursion(struct node* p);
 void Delete(struct node**,int);
-
+void ReversePrint(struct node*);
 
 int main () {
 
@@ -32,6 +32,9 @@ int main () {
   puts("After Delete: ");
   Delete(&head,3);
   PrintUsingRecursion(head);
+
+  puts("Reverse Print");
+  ReversePrint(head);
 
   return 0;
 }
@@ -101,8 +104,29 @@ void PrintUsingRecursion (struct node* PointerOfHead) {
 
   printf(" %d ",ptr_head->data);
   PrintUsingRecursion(ptr_head->next);
+
   printf("\n");
 }
+
+
+
+void ReversePrint (struct node* PointerOfHead) {
+
+   struct node *ptr_head = PointerOfHead;
+
+   if (ptr_head == NULL) {
+     return;
+  }
+
+
+  ReversePrint (ptr_head->next);
+  printf(" %d ",ptr_head->data);
+
+
+
+
+}
+
 
 void Delete (struct node** PointerOfHead, int n) {
     struct node* temp = *PointerOfHead;
@@ -112,7 +136,8 @@ void Delete (struct node** PointerOfHead, int n) {
        temp = temp->next;
     }
     struct node* temp_next = temp->next;
+    //printf("-- %d -- \n -- %d-- ",temp_next->data,temp->data);
     temp->next = temp_next->next;
     free(temp_next);
-    //printf("-- %d -- ",temp_next->data);
+   // printf("-- %d -- ",temp_next->data);
 }

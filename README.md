@@ -1,1 +1,1 @@
-Algorithms and Data structure implementations
+Implementation of common data structures and algorithms

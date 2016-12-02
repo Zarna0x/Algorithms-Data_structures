@@ -1,114 +1,118 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-struct node{
+struct node {
   int data;
-  struct node *next;
+  struct node* next;
 };
 
- //Head node
-// struct node* head;
-void InsertNth(int, int); // InserthNth(2,1)
-void Insert(struct node**,int);
+void Insert(struct node**, int x);
 void Print(struct node*);
-void delete(int);
-void reverse();
+void reverse(struct node**);
+void InsertNth(struct node**,int,int);
+void PrintUsingRecursion(struct node* p);
+void Delete(struct node**,int);
+
 
 int main () {
-   struct node* head;
-   head = NULL;
-   printf("How many numbers ? ");
-   int i,n,x;
-   scanf("%d",&n);
 
-   for (i = 0; i < n; i++) {
-      printf("Enter the number: \n");
-      scanf("%d",&x);
-      Insert(&head,x);
-      Print(head);
-   }
-  // delete(3);
-  //reverse();
-  //Print();
+  struct node* head;
+  Insert(&head,1);
+  Insert(&head,2);
+  Insert(&head,3);
+  Insert(&head,4);
+  InsertNth(&head,3,7);
+  Print(head);
+
+  printf("After Reverse\n");
+  reverse(&head);
+  PrintUsingRecursion(head);
+
+
+  puts("After Delete: ");
+  Delete(&head,3);
+  PrintUsingRecursion(head);
 
   return 0;
-
 }
 
-void Insert (struct node** PointerOfHead,int x) {
-  struct node* temp = (struct node*)malloc(sizeof(struct node));
+void Insert(struct node** PointerOfHead,int x) {
+  struct node* temp = (struct node*) malloc(sizeof(struct node));
   temp->data = x;
   temp->next = *PointerOfHead;
   *PointerOfHead = temp;
 }
 
-
 void Print (struct node* head) {
-  struct node* temp = head;
-  printf("List is: ");
+   struct node* temp = head;
+   printf("List is: ");
+   while (temp != NULL) {
+     printf(" %d ",temp->data);
+     temp = temp->next;
+   }
 
-  while (temp != NULL) {
-      printf(" %d ",temp->data);
+   printf("\n\n");
+}
 
-      temp = temp->next;
+void reverse (struct node** PointerOfHead) {
+   struct node *current,*prev,*next;
+   current = *PointerOfHead;
+  // printf("%d",*current->data);
+  // return;
+   while ( current != NULL) {
+     // set next
+     next = current->next;
+    // reverse link
+     current->next = prev;
+     // set prevous link
+     prev = current;
+     current = next;
+   }
 
-  }
-
-  printf("\n\n");
+    *PointerOfHead = prev;
 
 }
 
-void InsertNth (int data, int n) {
-  struct node* temp1  = (struct node*)malloc (sizeof(struct node)) ;
-  temp1->data = data;
-  temp1->next = NULL;
+void InsertNth(struct node** PointerOfHead,int n, int x) {
+  struct node* temp = (struct node*)malloc(sizeof(struct node));
+  temp->data = x;
+  temp->next = NULL;
+  struct node* tmp_head = *PointerOfHead;
   if (n == 1) {
-    temp1->next = head;
-    head = temp1;
-    return;
-  }
-
-  struct node* temp2 = (struct node*)malloc (sizeof(struct node)) ;
-  temp2 = head;
-  int i;
-  for ( i = 0; i < n-2; i++) {
-      temp2 = temp2->next;
-  }
-
-  temp1->next = temp2->next;
-  temp2->next = temp1;
-
-
-}
-
-void Delete (int n) {
-  struct node* temp1 = head;
-   if (n == 1) {
-     head = temp1->next;
-     free(temp1);
+     temp->next = tmp_head;
+     tmp_head = temp;
      return;
-   }
-  int i;
-  for (i = 0; i <= n-1; i++) {
-     temp1 = temp1->next;
-   }
-
-   struct node* temp2 = temp1->next; // temp2 = 0x3
-   temp1->next = temp2->next;
-   free(temp2);
-
+  }
+   int i;
+   for (i = 0 ; i < n-2; i++)  {
+      tmp_head = tmp_head->next;
+    }
+    temp->next = tmp_head->next;
+    tmp_head->next = temp;
 }
 
-void reverse () {
- struct node *currNode, *prevNode,*nextNode ;
- currNode = head;
- prevNode = NULL;
- nextNode = NULL;
- while (currNode != NULL) {
-    nextNode = currNode->next;
-    currNode->next = prevNode;
-    prevNode = currNode;
-    currNode = nextNode;
- }
-   head = prevNode;
+void PrintUsingRecursion (struct node* PointerOfHead) {
+
+   struct node *ptr_head = PointerOfHead;
+
+   if (ptr_head == NULL) {
+     return;
+  }
+
+  printf(" %d ",ptr_head->data);
+  PrintUsingRecursion(ptr_head->next);
+  printf("\n");
+}
+
+void Delete (struct node** PointerOfHead, int n) {
+    struct node* temp = *PointerOfHead;
+    int i;
+
+    for (i = 0; i < n-2; i++) {
+       temp = temp->next;
+    }
+    struct node* temp_next = temp->next;
+    temp->next = temp_next->next;
+    free(temp_next);
+    //printf("-- %d -- ",temp_next->data);
 }

@@ -12,6 +12,7 @@ void InsertNth(int, int); // InserthNth(2,1)
 void Insert(struct node**,int);
 void Print(struct node*);
 void delete(int);
+void reverse();
 
 int main () {
    struct node* head;
@@ -27,6 +28,8 @@ int main () {
       Print(head);
    }
   // delete(3);
+  //reverse();
+  //Print();
 
   return 0;
 
@@ -94,4 +97,18 @@ void Delete (int n) {
    temp1->next = temp2->next;
    free(temp2);
 
+}
+
+void reverse () {
+ struct node *currNode, *prevNode,*nextNode ;
+ currNode = head;
+ prevNode = NULL;
+ nextNode = NULL;
+ while (currNode != NULL) {
+    nextNode = currNode->next;
+    currNode->next = prevNode;
+    prevNode = currNode;
+    currNode = nextNode;
+ }
+   head = prevNode;
 }

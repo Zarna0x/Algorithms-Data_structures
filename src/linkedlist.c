@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+
 
 struct node {
   int data;
@@ -14,6 +17,7 @@ void PrintUsingRecursion(struct node* p);
 void Delete(struct node**,int);
 void ReversePrint(struct node*);
 void ReverseUsingRecursion(struct node*);
+void DeleteByValue(int);
 
 struct node* head;
 int main () {
@@ -148,6 +152,39 @@ void Delete (struct node** PointerOfHead, int n) {
     free(temp_next);
    // printf("-- %d -- ",temp_next->data);
 }
+
+
+void DeleteByValue(int x) {
+  
+  bool check_if = false;
+  int pos = NULL;
+  int i = 1;
+  while (head_ptr != NULL) {
+    if(head_ptr->data == x) {
+       check_if = true;
+       pos = i;
+       break;
+    }
+    i++;
+    head_ptr = head_ptr->next;
+  }
+
+   if (check_if) {
+    
+    struct node *temp = head;
+    int j = 0;
+    for (j = 0; j < pos - 2; j++) {
+      temp = temp->next;
+    }
+       struct node* temp2 = temp->next;
+       temp->next = temp2;
+       free(temp2);
+   } else {
+      puts("\nItem is not int thelist\n");
+   }
+
+}
+
 
 void ReverseUsingRecursion (struct node* p) {
 

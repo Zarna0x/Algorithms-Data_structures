@@ -155,7 +155,7 @@ void Delete (struct node** PointerOfHead, int n) {
 
 
 void DeleteByValue(int x) {
-  
+  struct node* head_ptr = head;
   bool check_if = false;
   int pos = NULL;
   int i = 1;

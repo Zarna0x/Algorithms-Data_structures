@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct node {
   int data;
@@ -10,6 +11,23 @@ struct node {
 };
 
 struct node* head;
+
+
+bool isEmpty() {
+   return head == NULL;
+}
+
+int countNodes() {
+   struct node* counter_node = head;
+
+   int i = 0;
+   while (counter_node != NULL) {
+      i++;
+      counter_node = counter_node->next;
+   }
+
+   return i;
+}
 
 struct node* GetNewNode(int x) {
   struct node* newNode = (struct node*)malloc(sizeof(struct node));
@@ -77,11 +95,75 @@ void Print () {
   printf("\n");
 }
 
+void DeleteHead () {
+  if (head->next == NULL) {
+     head = NULL;
+     return;
+  }
+
+
+  head = head->next;
+  head->prev = NULL;
+
+}
+
+void DeleteNth(int n){
+  if(n > countNodes()){
+     return;
+  }
+  struct node* temp = head;
+  int i;
+  for (i = 0; i <  n-2; i++) {
+     temp = temp->next;
+  }
+   struct node* temp2 = temp->next;
+   temp->next  = temp2->next;
+   temp2->next->prev = temp;
+   free(temp2);
+
+
+}
+
+void InsertNth (int x,int n) {
+  if(n > countNodes()){
+     return;
+  }
+  struct node* newNode = GetNewNode(x);
+  if (n == 1) {
+
+     head->prev    = newNode;
+     newNode->next = head;
+     head = newNode;
+     return ;
+  }
+
+  int i;
+  struct node* tmp_head = head;
+  for (i = 0; i < n-2; i++) {
+     tmp_head = tmp_head->next; // 2th node
+  }
+
+  newNode->next = tmp_head->next;
+  tmp_head->next->prev = newNode;
+  tmp_head->next = newNode;
+  newNode->prev  = tmp_head;
+
+
+}
+
+
+void DeleteByValue(){}
+void DeleteLast(){}
+
+
 int main () {
   InsertAtHead(1);
   InsertAtHead(2);
   InsertAtHead(3);
   InsertAtHead(4);
+  InsertAtHead(5);
+  InsertAtHead(6);
+  InsertAtHead(7);
  ////
 
  Print();
@@ -89,6 +171,22 @@ int main () {
  InsertAtTail(9);
  Print();
  ReversePrint();
+ Print();
+ DeleteHead();
+ printf("After Delete Head: \n");
+ Print();
+ printf("Delete 3-th element: \n\n");
+ DeleteNth(3);
+ Print();
+
+
+ printf("Insert 3-th element: \n\n");
+ InsertNth(77,2);
+ Print();
+
+
+
+
 
   return 0;
 }

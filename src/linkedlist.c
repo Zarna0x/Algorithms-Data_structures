@@ -1,271 +1,202 @@
-// Double Linked list implementation
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
+
+
 struct node {
   int data;
   struct node* next;
-  struct node* prev;
 };
 
+void Insert(struct node**, int x);
+void Print(struct node*);
+void reverse(struct node**);
+void InsertNth(struct node**,int,int);
+void PrintUsingRecursion(struct node* p);
+void Delete(struct node**,int);
+void ReversePrint(struct node*);
+void ReverseUsingRecursion(struct node*);
+void DeleteByValue(int);
+
 struct node* head;
+int main () {
 
-bool isEmpty() {
-   return head == NULL;
+
+  Insert(&head,1);
+  Insert(&head,2);
+  Insert(&head,3);
+  Insert(&head,4);
+  InsertNth(&head,3,7);
+  Print(head);
+
+  printf("After Reverse\n");
+  reverse(&head);
+  PrintUsingRecursion(head);
+
+
+  puts("After Delete: ");
+  Delete(&head,3);
+  PrintUsingRecursion(head);
+
+  puts("Reverse Print");
+  ReversePrint(head);
+
+
+  puts("\nReverse  print using recursion: \n");
+  ReverseUsingRecursion(head);
+  Print(head);
+
+  return 0;
 }
 
-int countNodes() {
-   struct node* counter_node = head;
+void Insert(struct node** PointerOfHead,int x) {
+  struct node* temp = (struct node*) malloc(sizeof(struct node));
+  temp->data = x;
+  temp->next = *PointerOfHead;
+  *PointerOfHead = temp;
+}
 
-   int i = 0;
-   while (counter_node != NULL) {
-      i++;
-      counter_node = counter_node->next;
+void Print (struct node* head) {
+   struct node* temp = head;
+   printf("List is: ");
+   while (temp != NULL) {
+     printf(" %d ",temp->data);
+     temp = temp->next;
    }
 
-   return i;
+   printf("\n\n");
 }
 
-struct node* GetNewNode(int x) {
-  struct node* newNode = (struct node*)malloc(sizeof(struct node));
-  newNode->data = x;
-  newNode->prev = NULL;
-  newNode->next = NULL;
-  return newNode;
-
-}
-
-void InsertAtHead( int x ) {
-   struct node* temp = GetNewNode(x);
-   if (head == NULL) {
-      head = temp;
-      return;
+void reverse (struct node** PointerOfHead) {
+   struct node *current,*prev,*next;
+   current = *PointerOfHead;
+  // printf("%d",*current->data);
+  // return;
+   while ( current != NULL) {
+     // set next
+     next = current->next;
+    // reverse link
+     current->next = prev;
+     // set prevous link
+     prev = current;
+     current = next;
    }
-     head->prev = temp;
-     temp->next = head;
-     head       = temp;
- }
 
- void InsertAtTail (int x) {
-     struct node* newNode = GetNewNode(x);
-     struct node* temp    = head;
+    *PointerOfHead = prev;
 
-     if (head == NULL) {
-        head = newNode;
-        return;
-     }
-
-     //Iterate right
-    while (temp->next != NULL) {
-       temp = temp->next;
-    }
-
-    temp->next = newNode;
-    newNode->prev = temp;
-
-
- }
-
-void ReversePrint() {
-	struct node* temp = head;
-	if(temp == NULL) return; // empty list, exit
-	// Going to last Node
-	while(temp->next != NULL) {
-		temp = temp->next;
-	}
-	// Traversing backward using prev pointer
-	printf("Reverse: ");
-	while(temp != NULL) {
-		printf("%d ",temp->data);
-		temp = temp->prev;
-	}
-	printf("\n");
 }
 
-void Print () {
-  struct node* temp = head;
-  printf("Forward: ");
-  while (temp != NULL) {
-    printf("%d, ",temp->data);
-    temp = temp->next;
+void InsertNth(struct node** PointerOfHead,int n, int x) {
+  struct node* temp = (struct node*)malloc(sizeof(struct node));
+  temp->data = x;
+  temp->next = NULL;
+  struct node* tmp_head = *PointerOfHead;
+  if (n == 1) {
+     temp->next = tmp_head;
+     tmp_head = temp;
+     return;
   }
+   int i;
+   for (i = 0 ; i < n-2; i++)  {
+      tmp_head = tmp_head->next;
+    }
+    temp->next = tmp_head->next;
+    tmp_head->next = temp;
+}
+
+void PrintUsingRecursion (struct node* PointerOfHead) {
+
+   struct node *ptr_head = PointerOfHead;
+
+   if (ptr_head == NULL) {
+     return;
+  }
+
+  printf(" %d ",ptr_head->data);
+  PrintUsingRecursion(ptr_head->next);
+
   printf("\n");
 }
 
-void DeleteHead () {
-  if (head->next == NULL) {
-     head = NULL;
+
+
+void ReversePrint (struct node* PointerOfHead) {
+
+   struct node *ptr_head = PointerOfHead;
+
+   if (ptr_head == NULL) {
      return;
   }
 
 
-  head = head->next;
-  head->prev = NULL;
-
-}
-
-void DeleteNth(int n){
-  if(n > countNodes()){
-     return;
-  }
-  struct node* temp = head;
-  int i;
-  for (i = 0; i <  n-2; i++) {
-     temp = temp->next;
-  }
-   struct node* temp2 = temp->next;
-   temp->next  = temp2->next;
-   temp2->next->prev = temp;
-   free(temp2);
+  ReversePrint (ptr_head->next);
+  printf(" %d ",ptr_head->data);
 
 
-}
-
-void InsertNth (int x,int n) {
-  if(n > countNodes()){
-     return;
-  }
-  struct node* newNode = GetNewNode(x);
-  if (n == 1) {
-
-     head->prev    = newNode;
-     newNode->next = head;
-     head = newNode;
-     return ;
-  }
-
-  int i;
-  struct node* tmp_head = head;
-  for (i = 0; i < n-2; i++) {
-     tmp_head = tmp_head->next; // 2th node
-  }
-
-  newNode->next = tmp_head->next;
-  tmp_head->next->prev = newNode;
-  tmp_head->next = newNode;
-  newNode->prev  = tmp_head;
 
 
 }
 
 
-void DeleteByValue (int x){
-  struct node* tmp_ptr = head;
-  int i = 1;
-  bool check_if = false;
-  int pos;
+void Delete (struct node** PointerOfHead, int n) {
+    struct node* temp = *PointerOfHead;
+    int i;
 
-  while (tmp_ptr != NULL){
-     if (tmp_ptr->data == x) {
-        check_if = true;
-        pos = i;
-        break;
-    }
-
-     i++;
-     tmp_ptr = tmp_ptr->next;
-  }
-
-
-
-   // Now delete post-th element
-   struct node* temp = head;
-   int j ;
-   for (j = 0; j < pos - 2; j++) {
+    for (i = 0; i < n-2; i++) {
        temp = temp->next;
+    }
+    struct node* temp_next = temp->next;
+    //printf("-- %d -- \n -- %d-- ",temp_next->data,temp->data);
+    temp->next = temp_next->next;
+    free(temp_next);
+   // printf("-- %d -- ",temp_next->data);
+}
+
+
+void DeleteByValue(int x) {
+  struct node* head_ptr = head;
+  bool check_if = false;
+  int pos = NULL;
+  int i = 1;
+  while (head_ptr != NULL) {
+    if(head_ptr->data == x) {
+       check_if = true;
+       pos = i;
+       break;
+    }
+    i++;
+    head_ptr = head_ptr->next;
+  }
+
+   if (check_if) {
+    
+    struct node *temp = head;
+    int j = 0;
+    for (j = 0; j < pos - 2; j++) {
+      temp = temp->next;
+    }
+       struct node* temp2 = temp->next;
+       temp->next = temp2;
+       free(temp2);
+   } else {
+      puts("\nItem is not int thelist\n");
    }
 
-
-   temp->next = tmp_ptr->next;
-   tmp_ptr->next->prev = temp;
-   free(tmp_ptr);
 }
 
-bool Exists (int x) {
-   struct node* tmp = head;
-   bool exists = false;
-   int i;
-   while (tmp != NULL){
-     if (tmp->data == x) {
-        exists = true;
-        break;
-    }
 
-     i++;
-     tmp = tmp->next;
+void ReverseUsingRecursion (struct node* p) {
+
+
+  if (p->next == NULL) {
+
+     head = p;
+     return;
   }
+  ReverseUsingRecursion(p->next);
 
-  return exists;
-}
-
-void DeleteLast(){
-  struct node* tmp = head;
-  while (tmp->next != NULL) {
-     tmp = tmp->next;
-  }
-    tmp->prev->next = NULL;
-    tmp = NULL;
-    free(tmp);
-
-}
-
-void reverse(){
-  struct node *currNode,*nextNode,*prevNode;
-  currNode = head;
-
-  while (currNode != NULL) {
-     // set Next
-     nextNode = currNode->next; 
-     currNode->next = prevNode; 
-
-     prevNode = currNode;
-     currNode = nextNode;
-  }
-     head = prevNode;
-}
-
-int main () {
-  InsertAtHead(1);
-  InsertAtHead(2);
-  InsertAtHead(3);
-  InsertAtHead(4);
-  InsertAtHead(5);
-  InsertAtHead(6);
-  InsertAtHead(7);
- ////
-
- Print();
-
- InsertAtTail(9);
- Print();
- ReversePrint();
- Print();
- DeleteHead();
- printf("After Delete Head: \n");
- Print();
- printf("Delete 3-th element: \n\n");
- DeleteNth(3);
- Print();
-
-
- printf("Insert 3-th element: \n\n");
- InsertNth(77,3);
- Print();
-
-
-
- DeleteByValue (77);
- //DeleteByValue (5);
- Print();
- //DeleteLast();
- puts("___________");
- Print();
- printf("__________");
- reverse();
- Print();
-
-
-  return 0;
+   struct node* q = p->next;
+   q->next = p;
+   p->next = NULL;
 }

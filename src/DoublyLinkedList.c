@@ -152,7 +152,54 @@ void InsertNth (int x,int n) {
 }
 
 
-void DeleteByValue(){}
+void DeleteByValue (int x){
+  struct node* tmp_ptr = head;
+  int i = 1;
+  bool check_if = false;
+  int pos;
+
+  while (tmp_ptr != NULL){
+     if (tmp_ptr->data == x) {
+        check_if = true;
+        pos = i;
+        break;
+    }
+
+     i++;
+     tmp_ptr = tmp_ptr->next;
+  }
+
+
+
+   // Now delete post-th element
+   struct node* temp = head;
+   int j ;
+   for (j = 0; j < pos - 2; j++) {
+       temp = temp->next;
+   }
+
+
+   temp->next = tmp_ptr->next;
+   tmp_ptr->next->prev = temp;
+   free(tmp_ptr);
+}
+
+bool Exists (int x) {
+   struct node* tmp = head;
+   bool exists = false;
+   int i;
+   while (tmp != NULL){
+     if (tmp->data == x) {
+        exists = true;
+        break;
+    }
+
+     i++;
+     tmp = tmp->next;
+  }
+
+  return exists;
+}
 void DeleteLast(){}
 
 
@@ -181,12 +228,14 @@ int main () {
 
 
  printf("Insert 3-th element: \n\n");
- InsertNth(77,2);
+ InsertNth(77,3);
  Print();
 
 
 
-
-
+ DeleteByValue (77);
+ DeleteByValue (5);
+ Print();
+ printf("--%d--",Exists(1));
   return 0;
 }

@@ -217,15 +217,13 @@ void reverse(){
 
   while (currNode != NULL) {
      // set Next
-     nextNode = currNode->next; // next = 2
-     currNode->next = prevNode; // cuurnext =ĵnull
+     nextNode = currNode->next; 
+     currNode->next = prevNode; 
 
      prevNode = currNode;
      currNode = nextNode;
   }
      head = prevNode;
-
-printf("--%d--",head->next->next->data);
 }
 
 int main () {

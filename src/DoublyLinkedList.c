@@ -247,6 +247,10 @@ void clear() {
 }
 
 void Swap (int n) {
+  if(n >= countNodes()){
+     return;
+  }
+
   struct node* tmp_ptr = head;
 
   // get n-th node pointer
@@ -259,12 +263,35 @@ void Swap (int n) {
 
   // Swap
 
+
   tmp_ptr->prev->next  = nextNode;
   nextNode->next->prev = tmp_ptr;
+
   tmp_ptr->next = nextNode->next;
   nextNode->prev = tmp_ptr->prev;
   tmp_ptr->prev  = nextNode;
   nextNode->next = tmp_ptr;
+
+}
+
+void ChangeNodePos(int n, int new_position) {
+ if(n > countNodes()){
+     return;
+  }
+
+  if (new_position > n) {
+     int iter = new_position - n;
+     int i = 1;
+     while ( i <= iter) {
+        Swap(n);
+        i++;
+        n++;
+     }
+
+  }else if (new_position < n) {
+     int iter = n - new_position;
+    return ;
+  }
 
 }
 
@@ -329,5 +356,24 @@ int main () {
  puts("\nafter swap2222:\n");
  Print();
 
+/*
+int i = 1;
+int offset = 3;
+
+while (i <= 3) {
+ printf(" %d-> \n",i);
+ Swap(offset);
+ Print();
+ i++;
+ offset++;
+}
+
+ puts("\nafter swap333:\n");
+ Print();
+*/
+
+ChangeNodePos(3,5);
+puts("New Position");
+Print();
   return 0;
 }

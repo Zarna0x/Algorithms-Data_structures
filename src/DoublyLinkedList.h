@@ -1,3 +1,5 @@
+#ifndef DOUBLYLINKEDLIST_H
+#define DOUBLYLINKEDLIST_H
 struct node {
   int data;
   struct node* next;
@@ -338,4 +340,4 @@ void ChangeNodePos(int n, int new_position) {
   }
 
 }
-
+#endif // DOUBLYLINKEDLIST_H

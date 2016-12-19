@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 struct node {
   int data;
@@ -11,7 +12,6 @@ struct node {
 };
 
 struct node* head;
-
 
 bool isEmpty() {
    return head == NULL;
@@ -200,8 +200,73 @@ bool Exists (int x) {
 
   return exists;
 }
-void DeleteLast(){}
 
+void DeleteLast(){
+  struct node* tmp = head;
+  while (tmp->next != NULL) {
+     tmp = tmp->next;
+  }
+    tmp->prev->next = NULL;
+    tmp = NULL;
+    free(tmp);
+
+}
+
+void reverse(){
+  struct node *currNode,*nextNode,*prevNode;
+  currNode = head;
+
+  while (currNode != NULL) {
+     // set Next
+     nextNode = currNode->next; // next = 2
+
+     currNode->next = prevNode; // cuurnext =ĵnull
+
+     prevNode = currNode;
+     currNode = nextNode;
+  }
+     head = prevNode;
+
+//printf("--%d--",head->next->next->data);
+}
+
+void clear() {
+  struct node* current = head;
+  struct node* next;
+
+  while (current!= NULL) {
+        next = current->next;
+        free(current);
+        //move one
+        current = next;
+  }
+
+   head = NULL;
+
+
+}
+
+void Swap (int n) {
+  struct node* tmp_ptr = head;
+
+  // get n-th node pointer
+  int i;
+  for (i = 0; i < n-1 ;i++ ) {
+     tmp_ptr = tmp_ptr->next;
+  }
+  // Swap adjacent nodes;
+  struct node* nextNode = tmp_ptr->next;
+
+  // Swap
+
+  tmp_ptr->prev->next  = nextNode;
+  nextNode->next->prev = tmp_ptr;
+  tmp_ptr->next = nextNode->next;
+  nextNode->prev = tmp_ptr->prev;
+  tmp_ptr->prev  = nextNode;
+  nextNode->next = tmp_ptr;
+
+}
 
 int main () {
   InsertAtHead(1);
@@ -233,9 +298,36 @@ int main () {
 
 
 
- DeleteByValue (77);
- DeleteByValue (5);
+ //DeleteByValue (77);
+ //DeleteByValue (5);
  Print();
- printf("--%d--",Exists(1));
+ //DeleteLast();
+ puts("___________");
+ Print();
+ printf("__________");
+ reverse();
+ Print();
+ clear();
+ printf("after clear \n");
+ Print();
+  InsertAtHead(1);
+  InsertAtHead(2);
+  InsertAtHead(3);
+  InsertAtHead(4);
+  InsertAtHead(5);
+  InsertAtHead(6);
+  InsertAtHead(7);
+  InsertNth(77,3);
+ ////
+
+ Print();
+
+ Swap(3);
+ puts("\nafter swap:\n");
+ Print();
+ Swap(3);
+ puts("\nafter swap2222:\n");
+ Print();
+
   return 0;
 }

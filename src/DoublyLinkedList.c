@@ -269,8 +269,37 @@ void Swap (int n) {
 
   tmp_ptr->next = nextNode->next;
   nextNode->prev = tmp_ptr->prev;
+
   tmp_ptr->prev  = nextNode;
   nextNode->next = tmp_ptr;
+
+}
+
+void SwapLeft(int n) {
+if(n >= countNodes()){
+     return;
+  }
+
+  struct node* tmp_ptr = head;
+
+  // get n-th node pointer
+  int i;
+  for (i = 0; i < n-1 ;i++ ) {
+     tmp_ptr = tmp_ptr->next;
+  }
+  // Swap adjacent nodes;
+  struct node* prevNode = tmp_ptr->prev;
+
+  prevNode->prev->next = tmp_ptr;
+  tmp_ptr->next->prev  = prevNode;
+
+  tmp_ptr->prev  = prevNode->prev;
+  prevNode->next = tmp_ptr->next;
+
+  tmp_ptr->next  = prevNode;
+  prevNode->prev = tmp_ptr;
+  //printf("--%d--",tmp_ptr->data);
+
 
 }
 
@@ -279,7 +308,22 @@ void ChangeNodePos(int n, int new_position) {
      return;
   }
 
+  if (new_position == 1) {
+     struct node *pos = head;
+     // get Pos-th node
+     int i;
+     for (i = 0; i < n-1 ;i++ ) {
+       pos = pos->next;
+     }
+       InsertAtHead(pos->data);
+       DeleteNth(i+2);
+
+
+       return ;
+  }
+
   if (new_position > n) {
+   // Swap Right
      int iter = new_position - n;
      int i = 1;
      while ( i <= iter) {
@@ -289,11 +333,19 @@ void ChangeNodePos(int n, int new_position) {
      }
 
   }else if (new_position < n) {
+     // Swap Left
      int iter = n - new_position;
+     int i = 1; // i = 5
+     while (i <= iter ) {
+        SwapLeft(n);
+        i++;
+        n--;
+     }
     return ;
   }
 
 }
+
 
 int main () {
   InsertAtHead(1);
@@ -375,5 +427,12 @@ while (i <= 3) {
 ChangeNodePos(3,5);
 puts("New Position");
 Print();
+
+SwapLeft(3);
+Print();
+
+ChangeNodePos(5,1);
+Print();
+
   return 0;
 }

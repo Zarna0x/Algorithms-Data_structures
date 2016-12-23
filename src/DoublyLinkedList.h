@@ -201,9 +201,10 @@ void DeleteLast(){
   while (tmp->next != NULL) {
      tmp = tmp->next;
   }
+    struct node* k = tmp;
     tmp->prev->next = NULL;
     tmp = NULL;
-    free(tmp);
+    free(k);
 
 }
 
@@ -382,11 +383,27 @@ struct node*  meoreprev = meore->prev;
 
 }
 
-void DeleteEvens () {
-  struct node* tmp = head;
-  int i = 1;
+void DeleteEvenOrOdd (const char* ev_od) {
+  struct node* tmp ;
+   bool ch = false;
+  if (strcmp("odd",ev_od) == 0) { // kentia
+
+    DeleteHead();
+    tmp = head;
+
+  }else if (strcmp("even",ev_od) == 0) {
+    ch = true;
+    tmp = head;
+  }
+
+
+
+ int i = 1;
+
   while (tmp->next != NULL) {
+//printf("\n %d -> %d and %d \n",i,tmp->data,tmp->next->data);
     if (i%2 == 0) {
+
         // delete
         tmp->prev->next = tmp->next;
         tmp->next->prev = tmp->prev;
@@ -394,7 +411,10 @@ void DeleteEvens () {
     }
 
     i++;
-    tmp = tmp->next;
+    tmp = tmp->next; // tmp = 10
+    if (tmp->next == NULL && ch) {
+       DeleteLast();
+    }
   }
 }
 

@@ -340,4 +340,62 @@ void ChangeNodePos(int n, int new_position) {
   }
 
 }
+
+struct node* getNthNode (int n) {
+  if (n > countNodes()) {
+    return head;
+  }
+
+  struct node* tmp = head;
+  int i = 1;
+  while (tmp != NULL) {
+     if ( i == n) {
+         return tmp;
+     }
+     i++;
+     tmp = tmp->next;
+  }
+
+}
+
+void SwapTwo (struct node** a, struct node** b) {
+ // printf("\n\n2)\n second address -> %p with data %d\n fifth address ->%p with data %d\n\n",*a,(*a)->data,*b,(*b)->data);
+  struct node *meore,*mexute,*z;
+  meore = *a;
+  mexute = *b;
+   //printf("\n\n3)\n second address -> %p with data %d \n fifth address ->%p with data %d\n\n",meore,meore->data,mexute,mexute->data);
+
+  meore->prev->next = mexute;
+  meore->next->prev = mexute;
+
+  mexute->prev->next = meore;
+  mexute->next->prev = meore;
+
+struct node*  meorenext = meore->next;
+struct node*  meoreprev = meore->prev;
+
+  meore->next = mexute->next;
+  meore->prev = mexute->prev;
+
+  mexute->prev = meoreprev;
+  mexute->next = meorenext;
+
+}
+
+void DeleteEvens () {
+  struct node* tmp = head;
+  int i = 1;
+  while (tmp->next != NULL) {
+    if (i%2 == 0) {
+        // delete
+        tmp->prev->next = tmp->next;
+        tmp->next->prev = tmp->prev;
+        free(tmp);
+    }
+
+    i++;
+    tmp = tmp->next;
+  }
+}
+
 #endif // DOUBLYLINKEDLIST_H

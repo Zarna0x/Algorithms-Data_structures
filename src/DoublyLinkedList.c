@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include "DoublyLinkedList.h"
+#include "stack.h"
 
 
 int main () {
@@ -92,7 +93,35 @@ SwapLeft(3);
 Print();
 
 ChangeNodePos(5,1);
+//clear();
 Print();
 
+struct node* second = getNthNode(2);
+struct node* fifth = getNthNode(5);
+
+//printf("\n\n1)\nSecond address ->%p with data %d\nfifth address  ->%p with data %d\n\n\n",second,second->data,fifth,fifth->data);
+printf("After Swap \n");
+SwapTwo(&second,&fifth);
+Print();
+clear();
+//struct node* meore = getNthNode(2);
+//struct node* mexute = getNthNode(5);
+//printf("\nhead->next = %p",head->next);
+//printf("--%d--",meore->data);
+// Create Stack;
+InsertAtTail(1);
+InsertAtTail(2);
+InsertAtTail(3);
+InsertAtTail(4);
+InsertAtTail(5);
+InsertAtTail(6);
+InsertAtTail(7);
+InsertAtTail(8);
+InsertAtTail(9);
+InsertAtTail(10);
+Print();
+
+DeleteEvenOrOdd("odd");
+Print();
   return 0;
 }

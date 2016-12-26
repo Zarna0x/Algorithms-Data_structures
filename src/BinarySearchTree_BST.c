@@ -57,7 +57,22 @@ void BST_Insert(struct BST_Node** root,int data) {
   @return bool (True if data is found, False if data is not found)
 */
 bool BST_Search (struct BST_Node** root, int data) {
+   if ((*root) == NULL) {
+       return false;
+   }
 
+   if ((*root)->data == data) {
+      return true;
+   }
+
+   // If data is less than root data Search at the left part of tree using recursion
+   if (data <= (*root)->data) {
+        BST_Search(&((*root)->left),data);
+   }
+    // Search at the right part of the tree
+   else  {
+      BST_Search(&((*root)->right),data);
+   }
 }
 
 
@@ -70,7 +85,7 @@ int main () {
   BST_Insert(&root,20);
   BST_Insert(&root,700);
   BST_Insert(&root,0);
+  printf("%d",BST_Search(&root,0));
 
-//printf("--%d AND %d AND %d--",root->data,root->left->data,root->left->left->data);
   return 0;
 }

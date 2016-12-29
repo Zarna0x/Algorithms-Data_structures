@@ -115,6 +115,44 @@ int FindMax (struct BST_Node* root) {
   }
 }
 
+/*
+  Insert New Node Using Iterative Method 
+*/
+void Insert (struct BST_Node** root, int data) {
+   if ((*root) == NULL) {
+      *root = GetNewBSTNode(data); // If Tree Is Empty
+      return ;
+   }
+
+     struct BST_Node *tmp, *offsetNode;
+     tmp = *root;
+     int count = 1;
+     while (tmp != NULL) {
+         if (data <= tmp->data) {
+              offsetNode = tmp;
+              tmp = tmp->left; 
+         }
+
+         else {
+             offsetNode = tmp;
+             tmp = tmp->right;
+
+         }
+
+         count++;
+     }
+
+     if (data <= offsetNode->data) {
+         offsetNode->left = GetNewBSTNode(data);
+     }
+
+     else if (data >= offsetNode->data) {
+          offsetNode->right = GetNewBSTNode(data);
+     }
+
+}
+
+
 
 int main () {
 

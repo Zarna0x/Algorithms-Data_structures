@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+
+#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
+
+
 // Binary Search Tree Implementation in C;
 struct BST_Node {
   int data;
@@ -81,7 +85,7 @@ bool BST_Search (struct BST_Node** root, int data) {
  @return => Min Value Of Tree
 */
 
-int FindMin (struct BST_Node* root) {
+int BST_FindMin (struct BST_Node* root) {
   if ( root == NULL) {
       return ; // Tree is Empty
   }
@@ -95,13 +99,14 @@ int FindMin (struct BST_Node* root) {
   }
 }
 
+
 /*
  @desc   => find Max Valued Element of Tree
  @param1 => pointer of struct node root
  @return => Max Value Of Tree
 */
 
-int FindMax (struct BST_Node* root) {
+int BST_FindMax (struct BST_Node* root) {
   if ( root == NULL) {
       return ; // Tree is Empty
   }
@@ -115,9 +120,9 @@ int FindMax (struct BST_Node* root) {
   }
 }
 
-/*
-  Insert New Node Using Iterative Method 
-*/
+
+// BST Insert Iterative Solution;
+
 void Insert (struct BST_Node** root, int data) {
    if ((*root) == NULL) {
       *root = GetNewBSTNode(data); // If Tree Is Empty
@@ -130,7 +135,8 @@ void Insert (struct BST_Node** root, int data) {
      while (tmp != NULL) {
          if (data <= tmp->data) {
               offsetNode = tmp;
-              tmp = tmp->left; 
+              tmp = tmp->left; // tmp = 10
+              // offsetNode = 9
          }
 
          else {
@@ -152,6 +158,26 @@ void Insert (struct BST_Node** root, int data) {
 
 }
 
+/*
+
+*/
+
+int BST_FindHeight (struct BST_Node* root) {
+  if (root == NULL) {
+       return -1;
+  }
+
+
+
+  int leftHeight  = FindHeight(root->left);
+  int RightHeight = FindHeight(root->right);
+
+
+  return MAX(leftHeight,RightHeight) + 1;
+
+
+
+}
 
 
 int main () {
@@ -164,9 +190,12 @@ int main () {
   BST_Insert(&root,700);
   BST_Insert(&root,99);
   printf("%d",BST_Search(&root,0));
-  int Min = FindMin(root);
-  int Max = FindMax(root);
+  int Min = BST_FindMin(root);
+  int Max = BST_FindMax(root);
   printf("\n Min -> %d \n Max ->%d",Min,Max);
+  int maxheight = BST_FindHeight(root);
 
+  printf("Max height is -> %2d",maxheight);
+  
   return 0;
 }

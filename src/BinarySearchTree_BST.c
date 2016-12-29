@@ -75,6 +75,46 @@ bool BST_Search (struct BST_Node** root, int data) {
    }
 }
 
+/*
+ @desc   => find Min Element of Tree
+ @param1 => pointer of struct node root
+ @return => Min Value Of Tree
+*/
+
+int FindMin (struct BST_Node* root) {
+  if ( root == NULL) {
+      return ; // Tree is Empty
+  }
+
+  if (root->left == NULL) {
+      return root->data; // There is only one element in the Tree
+  }
+
+  else  {
+    FindMin(root->left);
+  }
+}
+
+/*
+ @desc   => find Max Valued Element of Tree
+ @param1 => pointer of struct node root
+ @return => Max Value Of Tree
+*/
+
+int FindMax (struct BST_Node* root) {
+  if ( root == NULL) {
+      return ; // Tree is Empty
+  }
+
+  if (root->right == NULL) {
+      return root->data; // There is only one element in the Tree
+  }
+
+  else  {
+    FindMax(root->right);
+  }
+}
+
 
 int main () {
 
@@ -84,8 +124,11 @@ int main () {
   BST_Insert(&root,10);
   BST_Insert(&root,20);
   BST_Insert(&root,700);
-  BST_Insert(&root,0);
+  BST_Insert(&root,99);
   printf("%d",BST_Search(&root,0));
+  int Min = FindMin(root);
+  int Max = FindMax(root);
+  printf("\n Min -> %d \n Max ->%d",Min,Max);
 
   return 0;
 }

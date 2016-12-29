@@ -95,7 +95,7 @@ int BST_FindMin (struct BST_Node* root) {
   }
 
   else  {
-    FindMin(root->left);
+    BST_FindMin(root->left);
   }
 }
 
@@ -116,7 +116,7 @@ int BST_FindMax (struct BST_Node* root) {
   }
 
   else  {
-    FindMax(root->right);
+    BST_FindMax(root->right);
   }
 }
 
@@ -169,8 +169,8 @@ int BST_FindHeight (struct BST_Node* root) {
 
 
 
-  int leftHeight  = FindHeight(root->left);
-  int RightHeight = FindHeight(root->right);
+  int leftHeight  = BST_FindHeight(root->left);
+  int RightHeight = BST_FindHeight(root->right);
 
 
   return MAX(leftHeight,RightHeight) + 1;
@@ -178,7 +178,6 @@ int BST_FindHeight (struct BST_Node* root) {
 
 
 }
-
 
 int main () {
 

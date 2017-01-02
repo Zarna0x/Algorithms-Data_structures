@@ -196,6 +196,23 @@ void BST_PreorderPrint (struct BST_Node* root) {
   BST_PreorderPrint(root->right);
 }
 
+
+/*
+  @desc   => Depth first traversial of Binary Search Tree, (Inorder) (items will be sorted)
+  @param  => pointer of root node
+  @return => void
+*/
+void BST_InorderPrint (struct BST_Node* root) {
+  if (root == NULL) {
+     return ;
+  }
+
+
+  BST_InorderPrint(root->left);
+  printf(" %d ",root->data);
+  BST_InorderPrint(root->right);
+}
+
 int main () {
 
   struct BST_Node* root = NULL;

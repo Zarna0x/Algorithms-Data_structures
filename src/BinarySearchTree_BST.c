@@ -139,8 +139,7 @@ void Insert (struct BST_Node** root, int data) {
      while (tmp != NULL) {
          if (data <= tmp->data) {
               offsetNode = tmp;
-              tmp = tmp->left; // tmp = 10
-              // offsetNode = 9
+              tmp = tmp->left; 
          }
 
          else {
@@ -163,7 +162,7 @@ void Insert (struct BST_Node** root, int data) {
 }
 
 /*
-
+  @desc => find height of binary search tree
 */
 
 int BST_FindHeight (struct BST_Node* root) {
@@ -183,7 +182,7 @@ int BST_FindHeight (struct BST_Node* root) {
 
 }
 /*
-  @desc   => Deapth first traversial of Binary Search Tree, (Preorder)
+  @desc   => Depth first traversial of Binary Search Tree, (Preorder)
   @param  => pointer of root node
   @return => void
 */

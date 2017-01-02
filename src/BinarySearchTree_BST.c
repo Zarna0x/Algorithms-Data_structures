@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
 
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
@@ -212,6 +213,31 @@ void BST_InorderPrint (struct BST_Node* root) {
   printf(" %d ",root->data);
   BST_InorderPrint(root->right);
 }
+
+bool isBstUtil (struct BST_Node* root,int MinValue,int MaxValue) {
+  if (root == NULL) {
+      return true;
+  }
+
+  if (root->data > MinValue && root->data < MaxValue
+    && isBstUtil(root->left,MinValue,root->data)
+    && isBstUtil(root->right,root->data,MaxValue)
+  ) {
+    return true;
+  }
+
+  else {
+
+     return false;
+  }
+
+
+}
+
+bool isBST (struct BST_Node* root) {
+   return isBstUtil(root,INT_MIN,INT_MAX);
+}
+
 
 int main () {
 

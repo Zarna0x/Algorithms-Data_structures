@@ -121,8 +121,12 @@ int BST_FindMax (struct BST_Node* root) {
 }
 
 
-// BST Insert Iterative Solution;
-
+/* 
+  @desc   => BST Insert Iterative Solution;
+  @param1 => address of root pointer 
+  @param2 => data to insert
+  @return => void
+*/
 void Insert (struct BST_Node** root, int data) {
    if ((*root) == NULL) {
       *root = GetNewBSTNode(data); // If Tree Is Empty
@@ -177,6 +181,20 @@ int BST_FindHeight (struct BST_Node* root) {
 
 
 
+}
+/*
+  @desc   => Deapth first traversial of Binary Search Tree, (Preorder)
+  @param  => pointer of root node
+  @return => void
+*/
+void BST_PreorderPrint (struct BST_Node* root) {
+  if (root == NULL) {
+     return ;
+  }
+
+  printf(" %d ",root->data);
+  BST_PreorderPrint(root->left);
+  BST_PreorderPrint(root->right);
 }
 
 int main () {

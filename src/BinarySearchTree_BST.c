@@ -83,16 +83,16 @@ bool BST_Search (struct BST_Node** root, int data) {
 /*
  @desc   => find Min Element of Tree
  @param1 => pointer of struct node root
- @return => Min Value Of Tree
+ @return => Min Value Of Tree (pointer of node)
 */
 
-int BST_FindMin (struct BST_Node* root) {
+struct BST_Node* BST_FindMin (struct BST_Node* root) {
   if ( root == NULL) {
       return ; // Tree is Empty
   }
 
   if (root->left == NULL) {
-      return root->data; // There is only one element in the Tree
+      return root; // There is only one element in the Tree
   }
 
   else  {
@@ -104,16 +104,16 @@ int BST_FindMin (struct BST_Node* root) {
 /*
  @desc   => find Max Valued Element of Tree
  @param1 => pointer of struct node root
- @return => Max Value Of Tree
+ @return => Max Value Of Tree (pointer of node)
 */
 
-int BST_FindMax (struct BST_Node* root) {
+struct BST_Node* BST_FindMax (struct BST_Node* root) {
   if ( root == NULL) {
       return ; // Tree is Empty
   }
 
   if (root->right == NULL) {
-      return root->data; // There is only one element in the Tree
+      return root; // There is only one element in the Tree
   }
 
   else  {
@@ -239,6 +239,47 @@ bool isBST (struct BST_Node* root) {
 }
 
 
+void BST_Delete (struct BST_Node** root,int data) {
+   if (*root == NULL) {
+       return ;
+    }
+
+    if (data < (*root)->data) {
+       BST_Delete(&((*root)->left),data);
+   }
+
+   else if (data > (*root)->data) {
+      BST_Delete(&((*root)->right),data);
+   }
+
+   else {
+      if ( (*root)->left == NULL && (*root)->right == NULL ) {
+            free(*root);
+            *root = NULL;
+      }
+
+      else if ( (*root)->left == NULL ) {
+          struct BST_Node* tmp = *root; // node to delete
+          *root = tmp->right;
+          free(tmp);
+
+      }
+
+      else if ( (*root)->right == NULL ) {
+          struct BST_Node* tmp = *root;
+          *root = tmp->left;
+          free(tmp);
+      }
+
+      else  { // if node has two child
+        struct BST_Node* MinVal = BST_FindMin((*root)->right); 
+        (*root)->data = MinVal->data;
+         BST_Delete(&((*root)->right),MinVal->data);
+
+      }
+   }
+}
+
 int main () {
 
   struct BST_Node* root = NULL;
@@ -249,9 +290,9 @@ int main () {
   BST_Insert(&root,700);
   BST_Insert(&root,99);
   printf("%d",BST_Search(&root,0));
-  int Min = BST_FindMin(root);
-  int Max = BST_FindMax(root);
-  printf("\n Min -> %d \n Max ->%d",Min,Max);
+  struct BST_Node* Min = BST_FindMin(root);
+  struct BST_Node* Max = BST_FindMax(root);
+  printf("\n Min -> %d \n Max ->%d",Min->data,Max->data);
   int maxheight = BST_FindHeight(root);
 
   printf("Max height is -> %2d",maxheight);

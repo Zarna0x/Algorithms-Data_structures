@@ -34,10 +34,12 @@ void printArray(int *arr,int arrSize) {
 
 }
 
+// time complexity = O(n^2)
 int* selectionSort (int* Arr,int arrSize) {
+
   int i,j,min,temp;
 
-  for (i = 0; i < arrSize; i++) {
+  for (i = 0; i < arrSize-1; i++) {
      // find index of min value
      min = i;
      for (j = i+1; j < arrSize; j++) {

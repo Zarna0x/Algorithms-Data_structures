@@ -52,3 +52,12 @@ int* bubbleSort(int* Arr, int n) {
   }
   return Arr;
 }
+
+
+/*
+Time Complexity  = O(n^2)
+
+T(n) = C(n-1) + C(n-2) + C(n-3) + C(n-(n-1)
+= C(n(n-1)/2) = O(n^2)
+
+*/

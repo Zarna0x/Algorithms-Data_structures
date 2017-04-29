@@ -5,7 +5,7 @@ void printArray(int *,int);
 int* selectionSort(int *,int);
 int main () {
 
-int Arr[] = {5,7,9,1,3,15};
+int Arr[] = {5,7,9,1,3,15,5,3};
 int arraySize = sizeof(Arr)/sizeof(int);
 
 
@@ -47,9 +47,11 @@ int* selectionSort (int* Arr,int arrSize) {
      }
 
      // Swap positions
-     temp = Arr[i];
-     Arr[i] = Arr[min];
-     Arr[min] = temp;
+     if (min != i) {
+       temp = Arr[i];
+       Arr[i] = Arr[min];
+       Arr[min] = temp;
+     }
   }
 
   return Arr;

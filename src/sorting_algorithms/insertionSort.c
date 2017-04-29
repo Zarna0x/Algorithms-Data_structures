@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+ Worst case time complexity = O(n^2)
+ T(n) = C1(n-1) + C3(n-1) + C2 + 2C2 + 3C2 + ... + (n-1)C2
+ = (C1+C3)(n-1) + C2(n(n-1)/2) = O(n^2)
+*/
+
 void printArray(int *,int);
 int* insertionSort(int *,int);
 int main () {
@@ -49,3 +55,5 @@ int* insertionSort(int* Arr, int n) {
   }
   return Arr;
 }
+
+
